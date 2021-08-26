@@ -19,7 +19,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 700,
+    width: "600px",
+    maxWidth: "100%",
     margin: "1rem 0",
   },
   media: {
@@ -66,7 +67,6 @@ export default function AlertDialogSlide({
               </Avatar>
             }
             title={userDetails[0]?.name}
-            // title={item.user.name}
             // subheader={item.publication_date}
           />
           <CardMedia
@@ -76,8 +76,10 @@ export default function AlertDialogSlide({
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
+              <strong>email :</strong> {userDetails[0]?.email}
+              <br />
+              <strong>registration date : </strong>
+              {userDetails[0]?.registration_date}
             </Typography>
           </CardContent>
         </Card>

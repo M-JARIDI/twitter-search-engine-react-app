@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:8000";
+// const API_URL = "http://twitter-search-engine-backend.herokuapp.com";
 
-export const getSearchResults = async (setSearchResults) => {
+export const getSearchResults = async (searchKeyword, setSearchResults) => {
   await axios
-    .get(`${API_URL}/search`)
+    .get(`${API_URL}/search?q=${searchKeyword}`)
     .then((response) => {
       setSearchResults(response.data);
     })

@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Container, Button } from "@material-ui/core";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import { Container /*, Button*/, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+// import Pagination from "@material-ui/lab/Pagination";
 import {
   subscribeSearchKeyword,
   unSubscribeSearchKeyword,
 } from "../redux/slices/searchSlice";
-
-import SearchInput from "material-ui-search-bar";
 import TweeTCard from "../components/TweeTCard";
-
 import { getSearchResults } from "../utils/utils";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "80vh",
     display: "flex",
@@ -46,10 +43,18 @@ const useStyles = makeStyles({
     backgroundColor: "hsl(203, 89%, 53%)",
     margin: "0.5rem 0.25rem",
   },
-});
+  goBackButton: { marginRight: "auto" },
+  pagination: {
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 
 export default function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);
+
+  // const [page, setPage] = useState(1);
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -57,14 +62,18 @@ export default function SearchResults() {
 
   const searchKeyword = sessionStorage.getItem("searchKeyword") || "";
 
+  // const handleChangePage = (event, value) => {
+  //   setPage(value);
+  // };
+
   useEffect(() => {
-    getSearchResults(setSearchResults);
+    getSearchResults(searchKeyword, setSearchResults);
     return () => {
       sessionStorage.clear();
       setSearchResults([]);
       dispatch(unSubscribeSearchKeyword());
     };
-  }, [dispatch]);
+  }, [searchKeyword, dispatch]);
 
   useEffect(() => {
     dispatch(subscribeSearchKeyword(searchResults));
@@ -72,30 +81,30 @@ export default function SearchResults() {
 
   return (
     <Container className={classes.root}>
+      <IconButton
+        onClick={() => {
+          history.replace("/");
+          sessionStorage.clear();
+          window.location.reload();
+          dispatch(unSubscribeSearchKeyword());
+        }}
+        className={classes.goBackButton}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       {searchResults?.map((item, index) => {
+        /*.slice(page - 1, page)*/
         return <TweeTCard key={index} item={item} />;
       })}
-      <Container className={classes.inputContainer}>
-        <SearchInput
-          value={searchKeyword}
-          disabled={true}
-          className={classes.SearchInput}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<ArrowBackIosIcon />}
-          onClick={() => {
-            history.replace("/");
-            sessionStorage.clear();
-            window.location.reload();
-            dispatch(unSubscribeSearchKeyword());
-          }}
-          className={classes.button}
-        >
-          Back to home
-        </Button>
-      </Container>
+      {/* <Pagination
+        count={searchResults.length}
+        page={page}
+        onChange={handleChangePage}
+        showFirstButton
+        showLastButton
+        size="large"
+        className={classes.pagination}
+      /> */}
     </Container>
   );
 }

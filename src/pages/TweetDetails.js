@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { Container, Button, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -18,8 +17,8 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   cardContainer: {
-    maxWidth: 700,
-    margin: "1rem 0",
+    width: "600px",
+    maxWidth: "100%",
   },
   typography: {
     fontWeight: "bold",
@@ -42,7 +41,7 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: "hsl(203, 89%, 53%)",
   },
-  goBackButton: { marginRight: "auto", marginTop: "1rem" },
+  goBackButton: { marginRight: "auto" },
 });
 
 export default function TweetDetails() {

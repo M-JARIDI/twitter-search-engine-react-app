@@ -70,12 +70,12 @@ export default function TweeTCard({ item }) {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {item.description}
+            <strong>{item.description}</strong>
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button size="small" onClick={handleDetailClick}>
-            More details
+          <Button size="small" variant="contained" onClick={handleDetailClick}>
+            <strong>More details</strong>
           </Button>
         </CardActions>
       </Card>
