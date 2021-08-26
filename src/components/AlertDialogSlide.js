@@ -11,7 +11,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
-import { red } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import { getUserDetails } from "../utils/utils";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,7 +19,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // minWidth: 300,
     maxWidth: 700,
     margin: "1rem 0",
   },
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "hsl(203, 89%, 53%)",
   },
 }));
 
@@ -73,7 +71,7 @@ export default function AlertDialogSlide({
           />
           <CardMedia
             className={classes.media}
-            image="/static/images/cards/paella.jpg"
+            image="Twitter_cover.jpg"
             title="Paella dish"
           />
           <CardContent>

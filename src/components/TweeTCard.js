@@ -8,7 +8,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
 import PersonIcon from "@material-ui/icons/Person";
 import AlertDialogSlide from "./AlertDialogSlide";
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "hsl(203, 89%, 53%)",
   },
 }));
 
@@ -55,7 +54,7 @@ export default function TweeTCard({ item }) {
         />
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
+          image="Twitter_cover.jpg"
           title="Paella dish"
         />
         <CardContent>
@@ -69,7 +68,6 @@ export default function TweeTCard({ item }) {
           </Button>
         </CardActions>
       </Card>
-
       <AlertDialogSlide
         openDetailUser={openDetailUser}
         setOpenDetailUser={setOpenDetailUser}

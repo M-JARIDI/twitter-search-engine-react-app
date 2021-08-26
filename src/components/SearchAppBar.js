@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { alpha, makeStyles, createTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+
+import { Switch, ThemeProvider, CssBaseline } from "@material-ui/core";
 
 import SearchBar from "material-ui-search-bar";
 
@@ -31,25 +33,40 @@ const useStyles = makeStyles((theme) => ({
       width: "auto",
     },
   },
+  rightToolbar: {
+    marginLeft: "auto",
+    marginRight: 10,
+  },
 }));
 
 export default function SearchAppBar() {
+  const [darkMode, setDarkMode] = useState(false);
+
   const classes = useStyles();
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const theme = createTheme({
+    palette: {
+      type: darkMode ? "dark" : "light",
+    },
+  });
 
-  // const searchKeyword = sessionStorage.getItem("searchKeyword");
-
-  useEffect(() => {
-    setSearchKeyword(sessionStorage.getItem("searchKeyword"));
-  }, [searchKeyword]);
+  const searchKeyword = sessionStorage.getItem("searchKeyword");
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        style={{ backgroundColor: "hsl(203, 89%, 43%)" }}
+      >
         <Toolbar>
           <div style={{ margin: "5px 10px" }}>
-            <a href="/">
-              <img src="twitter.png" width="40" height="40" alt="logo" />
+            <a href="/" onClick={() => sessionStorage.clear()}>
+              <img
+                src="twitterr.png"
+                width="40"
+                height="40"
+                alt="logo"
+                style={{ boxShadow: "0px 5px 2px black" }}
+              />
             </a>
           </div>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -57,13 +74,22 @@ export default function SearchAppBar() {
           </Typography>
           {searchKeyword && (
             <div className={classes.search}>
-              <SearchBar
-                value={searchKeyword}
-                disabled={true}
-                className={classes.searchBar}
-              />
+              <SearchBar value={searchKeyword} disabled={true} />
             </div>
           )}
+          <section className={classes.rightToolbar}></section>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <i>
+              <Typography variant="h6">
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </Typography>
+            </i>
+            <Switch
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+            />
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
     </div>

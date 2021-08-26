@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // border: "7px solid red",
   },
   typography: {
     fontWeight: "bold",
@@ -21,14 +20,12 @@ const useStyles = makeStyles({
     fontSize: "clamp(3.5vh, 2.6vw, 15vw);",
     color: "black",
     textAlign: "center",
-    // border: "7px solid red",
   },
   inputContainer: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    // border: "4px solid green",
   },
   SearchInput: {
     width: "30rem",
@@ -38,7 +35,6 @@ const useStyles = makeStyles({
     padding: "11px 15px",
     fontWeight: "bold",
     backgroundColor: "hsl(203, 89%, 53%)",
-    // backgroundColor: "#1DA1F2",
     margin: "0.5rem 0.25rem",
   },
 });

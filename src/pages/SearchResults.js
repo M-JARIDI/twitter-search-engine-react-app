@@ -30,14 +30,12 @@ const useStyles = makeStyles({
     fontSize: "clamp(3.5vh, 2.6vw, 15vw);",
     color: "black",
     textAlign: "center",
-    // border: "7px solid red",
   },
   inputContainer: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    // border: "4px solid green",
   },
   SearchInput: {
     width: "30rem",
