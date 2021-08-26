@@ -44,9 +44,6 @@ export default function AlertDialogSlide({
   useEffect(() => {
     getUserDetails(user_id, setUserDetails);
   }, [user_id]);
-  useEffect(() => {
-    console.log("ffff", userDetails);
-  }, [userDetails]);
 
   return (
     <div>
@@ -67,10 +64,10 @@ export default function AlertDialogSlide({
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                {userDetails[0].name[0].toUpperCase()}
+                {userDetails[0]?.name[0].toUpperCase()}
               </Avatar>
             }
-            title={userDetails[0].name}
+            title={userDetails[0]?.name}
             // title={item.user.name}
             // subheader={item.publication_date}
           />

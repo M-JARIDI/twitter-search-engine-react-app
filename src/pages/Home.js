@@ -51,6 +51,7 @@ export default function Home() {
   const handleOnClickButton = () => {
     sessionStorage.setItem("searchKeyword", searchKeyword);
     window.open(`/search?q=${searchKeyword}`, "_blank")?.focus();
+    sessionStorage.clear();
   };
 
   return (

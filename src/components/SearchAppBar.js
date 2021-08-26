@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -35,8 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const searchKeyword = sessionStorage.getItem("searchKeyword");
+  // const searchKeyword = sessionStorage.getItem("searchKeyword");
+
+  useEffect(() => {
+    setSearchKeyword(sessionStorage.getItem("searchKeyword"));
+  }, [searchKeyword]);
 
   return (
     <div className={classes.grow}>

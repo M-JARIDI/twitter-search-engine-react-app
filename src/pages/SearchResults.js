@@ -5,10 +5,10 @@ import { Container, Button } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core/styles";
 
-// import {
-//   subscribeSearchKeyword,
-//   unSubscribeSearchKeyword,
-// } from "../redux/slices/searchSlice";
+import {
+  subscribeSearchKeyword,
+  unSubscribeSearchKeyword,
+} from "../redux/slices/searchSlice";
 
 import SearchInput from "material-ui-search-bar";
 import TweeTCard from "../components/TweeTCard";
@@ -62,7 +62,11 @@ export default function SearchResults() {
 
   useEffect(() => {
     getSearchResults(setSearchResults);
-    return setSearchResults([]);
+    return () => {
+      sessionStorage.clear();
+      setSearchResults([]);
+      dispatch(subscribeSearchKeyword());
+    };
   }, [dispatch]);
 
   useEffect(() => {}, [searchResults]);
@@ -85,6 +89,8 @@ export default function SearchResults() {
           onClick={() => {
             history.replace("/");
             sessionStorage.clear();
+            window.location.reload();
+            dispatch(unSubscribeSearchKeyword());
           }}
           className={classes.button}
         >
