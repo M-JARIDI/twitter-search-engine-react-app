@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { searchState } from "../redux/slices/searchSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -28,11 +31,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TweeTCard({ item }) {
+  const searchResults = useSelector(searchState);
   const classes = useStyles();
+  const history = useHistory();
 
   const [openDetailUser, setOpenDetailUser] = React.useState(false);
 
-  const handleDetailClick = () => {};
+  const handleDetailClick = () => {
+    console.log("redux", searchResults);
+    history.push({
+      pathname: "/tweet_details",
+      state: { searchResults },
+    });
+  };
 
   return (
     <>

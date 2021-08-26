@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const searchSlice = createSlice({
   name: "search",
-  initialState: {},
+  initialState: [],
   reducers: {
     subscribeSearchKeyword: (state, action) => {
       state = action.payload;
       return state;
     },
     unSubscribeSearchKeyword: (state, action) => {
-      state = {};
+      state = [];
       return state;
     },
   },

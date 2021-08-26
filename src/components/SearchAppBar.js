@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { alpha, makeStyles, createTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import { Switch, ThemeProvider, CssBaseline } from "@material-ui/core";
+import {
+  Switch,
+  ThemeProvider,
+  CssBaseline,
+  IconButton,
+} from "@material-ui/core";
+import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
 
 import SearchBar from "material-ui-search-bar";
 
@@ -82,7 +89,13 @@ export default function SearchAppBar() {
             <CssBaseline />
             <i>
               <Typography variant="h6">
-                {darkMode ? "Light Mode" : "Dark Mode"}
+                <IconButton>
+                  {darkMode ? (
+                    <BrightnessHighIcon />
+                  ) : (
+                    <Brightness4Icon style={{ color: "white" }} />
+                  )}
+                </IconButton>
               </Typography>
             </i>
             <Switch

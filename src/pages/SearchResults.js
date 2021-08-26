@@ -22,7 +22,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // border: "7px solid red",
   },
   typography: {
     fontWeight: "bold",
@@ -44,7 +43,7 @@ const useStyles = makeStyles({
   button: {
     padding: "11px 15px",
     fontWeight: "bold",
-    backgroundColor: "#1DA1F2",
+    backgroundColor: "hsl(203, 89%, 53%)",
     margin: "0.5rem 0.25rem",
   },
 });
@@ -56,18 +55,20 @@ export default function SearchResults() {
 
   const history = useHistory();
 
-  const searchKeyword = sessionStorage.getItem("searchKeyword");
+  const searchKeyword = sessionStorage.getItem("searchKeyword") || "";
 
   useEffect(() => {
     getSearchResults(setSearchResults);
     return () => {
       sessionStorage.clear();
       setSearchResults([]);
-      dispatch(subscribeSearchKeyword());
+      dispatch(unSubscribeSearchKeyword());
     };
   }, [dispatch]);
 
-  useEffect(() => {}, [searchResults]);
+  useEffect(() => {
+    dispatch(subscribeSearchKeyword(searchResults));
+  }, [searchResults, dispatch]);
 
   return (
     <Container className={classes.root}>
