@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { searchState } from "../redux/slices/searchSlice";
-import { Container, Button, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Container, Button } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core/styles";
 
-import SearchBar from "material-ui-search-bar";
-import { unSubscribeSearchQuery } from "../redux/slices/searchSlice";
+// import {
+//   subscribeSearchKeyword,
+//   unSubscribeSearchKeyword,
+// } from "../redux/slices/searchSlice";
+
+import SearchInput from "material-ui-search-bar";
+import TweeTCard from "../components/TweeTCard";
 
 import { getSearchResults } from "../utils/utils";
 
@@ -35,7 +39,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     // border: "4px solid green",
   },
-  searchBar: {
+  SearchInput: {
     width: "30rem",
     margin: "0.5rem 0.25rem",
   },
@@ -48,31 +52,31 @@ const useStyles = makeStyles({
 });
 
 export default function SearchResults() {
+  const [searchResults, setSearchResults] = useState([]);
   const classes = useStyles();
-  // const [loadingSearch, setLoadingSearch] = useState(false);
-  const searchQuery = useSelector(searchState);
-
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
 
-  //to get the value of the search after ?q=...
+  const history = useHistory();
+
   const searchKeyword = sessionStorage.getItem("searchKeyword");
 
   useEffect(() => {
-    getSearchResults();
-  }, []);
+    getSearchResults(setSearchResults);
+    return setSearchResults([]);
+  }, [dispatch]);
+
+  useEffect(() => {}, [searchResults]);
 
   return (
     <Container className={classes.root}>
-      <Typography className={classes.typography}>
-        Twitter Search Engine
-      </Typography>
+      {searchResults?.map((item, index) => {
+        return <TweeTCard key={index} item={item} />;
+      })}
       <Container className={classes.inputContainer}>
-        <SearchBar
+        <SearchInput
           value={searchKeyword}
           disabled={true}
-          className={classes.searchBar}
+          className={classes.SearchInput}
         />
         <Button
           variant="contained"

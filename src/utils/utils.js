@@ -2,22 +2,22 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000";
 
-export const getSearchResults = async () => {
+export const getSearchResults = async (setSearchResults) => {
   await axios
     .get(`${API_URL}/search`)
     .then((response) => {
-      console.log("search data", response.data);
+      setSearchResults(response.data);
     })
     .catch((error) => {
       console.log(`error`, error);
     });
 };
 
-export const getUserDetails = async (id) => {
+export const getUserDetails = async (id, setUserDetails) => {
   await axios
     .get(`${API_URL}/users/${id}`)
     .then((response) => {
-      console.log("user data ", response.data);
+      setUserDetails(response.data);
     })
     .catch((error) => {
       console.log(`error`, error);

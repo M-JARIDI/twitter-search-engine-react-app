@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const searchSlice = createSlice({
   name: "search",
-  initialState: "",
+  initialState: {},
   reducers: {
-    subscribeSearchQuery: (state, action) => {
+    subscribeSearchKeyword: (state, action) => {
       state = action.payload;
       return state;
     },
-    unSubscribeSearchQuery: (state, action) => {
-      state = "";
+    unSubscribeSearchKeyword: (state, action) => {
+      state = {};
       return state;
     },
   },
 });
 
 //destructuring of our actions
-export const { subscribeSearchQuery, unSubscribeSearchQuery } =
+export const { subscribeSearchKeyword, unSubscribeSearchKeyword } =
   searchSlice.actions;
 
 export const searchState = (state) => state.search;

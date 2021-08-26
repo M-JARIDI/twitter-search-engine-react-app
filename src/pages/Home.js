@@ -4,7 +4,7 @@ import { Container, Button, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import { makeStyles } from "@material-ui/core/styles";
 
-import SearchBar from "material-ui-search-bar";
+import SearchInput from "material-ui-search-bar";
 
 const useStyles = makeStyles({
   root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     // border: "4px solid green",
   },
-  searchBar: {
+  SearchInput: {
     width: "30rem",
     margin: "0.5rem 0.25rem",
   },
@@ -59,13 +59,13 @@ export default function Home() {
         Twitter Search Engine
       </Typography>
       <Container className={classes.inputContainer}>
-        <SearchBar
+        <SearchInput
           value={searchKeyword}
           placeholder="Search here"
           onChange={(newValue) => setSearchKeyword(newValue)}
           onRequestSearch={() => handleOnClickButton()}
           onCancelSearch={() => setSearchKeyword("")}
-          className={classes.searchBar}
+          className={classes.SearchInput}
         />
         <Link
           to={{
