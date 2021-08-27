@@ -13,12 +13,14 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
+    minHeight: "80vh",
   },
   cardContainer: {
     width: "600px",
     maxWidth: "100%",
+    backgroundColor: "hsl(0, 0%, 96%)",
   },
   typography: {
     fontWeight: "bold",
@@ -76,24 +78,47 @@ export default function TweetDetails() {
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe" className={classes.avatar}>
-                  {item.user.name[0].toUpperCase()}
+                  <img src={item.user.profile_image_url_https} alt="images" />
                 </Avatar>
               }
-              title={item?.user.name}
-              subheader={item?.publication_date}
+              title={`${item.user.name} @${item.user.screen_name}`}
+              subheader={item.created_at}
             />
-            <CardMedia
-              className={classes.media}
-              image="Twitter_cover.jpg"
-              title="Paella dish"
-            />
+            {item.extended_entities?.media[0]?.media_url_https && (
+              <CardMedia
+                className={classes.media}
+                image={item.extended_entities.media[0].media_url_https}
+                // title="Paella dish"
+              />
+            )}
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
-                <strong>{item?.description}</strong>
+                {item.text}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {item?.detail}
-              </Typography>
+              <hr />
+              {item?.retweeted_status && (
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <strong>retweeted status : </strong>
+                  <br />
+                  {item.retweeted_status?.text}
+                </Typography>
+              )}
+              {item?.entities?.user_mentions.length !== 0 && (
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <strong>user mentions : </strong>
+                  {item?.entities?.user_mentions?.map((mention) => {
+                    return `@${mention.screen_name}, `;
+                  })}
+                </Typography>
+              )}
+              {item?.entities?.hashtags?.length !== 0 && (
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <strong>user hashtags : </strong>
+                  {item.entities.hashtags.map((hash) => {
+                    return `#${hash.text}, `;
+                  })}
+                </Typography>
+              )}
             </CardContent>
             <Container
               style={{

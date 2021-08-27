@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Container /*, Button*/, IconButton } from "@material-ui/core";
+import { useHistory, useLocation } from "react-router-dom";
+import { Container, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 // import Pagination from "@material-ui/lab/Pagination";
@@ -59,8 +59,10 @@ export default function SearchResults() {
   const dispatch = useDispatch();
 
   const history = useHistory();
+  const location = useLocation();
 
-  const searchKeyword = sessionStorage.getItem("searchKeyword") || "";
+  const searchKeyword =
+    sessionStorage.getItem("searchKeyword") || location.search.substr(3) || "";
 
   // const handleChangePage = (event, value) => {
   //   setPage(value);

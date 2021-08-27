@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { searchState } from "../redux/slices/searchSlice";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: "600px",
     maxWidth: "100%",
     margin: "1rem 0",
+    backgroundColor: "hsl(0, 0%, 96%)",
   },
   media: {
     height: 0,
@@ -35,10 +36,9 @@ export default function TweeTCard({ item }) {
   const classes = useStyles();
   const history = useHistory();
 
-  const [openDetailUser, setOpenDetailUser] = React.useState(false);
+  const [openDetailUser, setOpenDetailUser] = useState(false);
 
   const handleDetailClick = () => {
-    console.log("redux", searchResults);
     history.push({
       pathname: "/tweet_details",
       state: { searchResults },
@@ -52,7 +52,7 @@ export default function TweeTCard({ item }) {
           onClick={() => setOpenDetailUser(true)}
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              {item.user.name[0].toUpperCase()}
+              <img src={item.user.profile_image_url_https} alt="images" />
             </Avatar>
           }
           action={
@@ -60,17 +60,19 @@ export default function TweeTCard({ item }) {
               <PersonIcon fontSize="large" style={{ paddingTop: "10px" }} />
             </IconButton>
           }
-          title={item.user.name}
-          subheader={item.publication_date}
+          title={`${item.user.name} @${item.user.screen_name}`}
+          subheader={item.created_at}
         />
-        <CardMedia
-          className={classes.media}
-          image="Twitter_cover.jpg"
-          title="Paella dish"
-        />
+        {item.extended_entities?.media[0]?.media_url_https && (
+          <CardMedia
+            className={classes.media}
+            image={item.extended_entities.media[0].media_url_https}
+            // title="Paella dish"
+          />
+        )}
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            <strong>{item.description}</strong>
+            {item.text}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>

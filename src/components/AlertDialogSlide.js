@@ -42,6 +42,9 @@ export default function AlertDialogSlide({
 
   useEffect(() => {
     getUserDetails(user_id, setUserDetails);
+    return () => {
+      setUserDetails([]);
+    };
   }, [user_id]);
 
   return (
@@ -63,23 +66,31 @@ export default function AlertDialogSlide({
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                {userDetails[0]?.name[0].toUpperCase()}
+                <img src={userDetails.profile_image_url_https} alt="images" />
               </Avatar>
             }
-            title={userDetails[0]?.name}
-            // subheader={item.publication_date}
+            title={`${userDetails.name} @${userDetails.screen_name}`}
+            subheader={`joined ${userDetails.created_at}`}
           />
-          <CardMedia
-            className={classes.media}
-            image="Twitter_cover.jpg"
-            title="Paella dish"
-          />
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            style={{ padding: "0 1rem 1rem" }}
+          >
+            <strong>description : </strong>
+            {userDetails.description}
+          </Typography>
+          {userDetails?.profile_banner_url && (
+            <CardMedia
+              className={classes.media}
+              image={userDetails.profile_banner_url}
+              // title="Paella dish"
+            />
+          )}
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              <strong>email :</strong> {userDetails[0]?.email}
-              <br />
-              <strong>registration date : </strong>
-              {userDetails[0]?.registration_date}
+              <strong>location :</strong> {userDetails.location}
             </Typography>
           </CardContent>
         </Card>

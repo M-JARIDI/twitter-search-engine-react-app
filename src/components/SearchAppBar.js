@@ -81,7 +81,11 @@ export default function SearchAppBar() {
           </Typography>
           {searchKeyword && (
             <div className={classes.search}>
-              <SearchBar value={searchKeyword} disabled={true} />
+              <SearchBar
+                value={searchKeyword}
+                disabled={true}
+                closeIcon={<></>}
+              />
             </div>
           )}
           <section className={classes.rightToolbar}></section>
