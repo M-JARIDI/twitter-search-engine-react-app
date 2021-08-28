@@ -79,7 +79,6 @@ export default function SearchResults() {
   useEffect(() => {
     getSearchResults(searchKeyword, setSearchResults, setLoading);
     return () => {
-      sessionStorage.clear();
       setSearchResults([]);
       dispatch(unSubscribeSearchKeyword());
     };
