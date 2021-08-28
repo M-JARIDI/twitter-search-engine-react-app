@@ -113,7 +113,7 @@ export default function SearchResults() {
       {searchResults?.slice(bounds[0], bounds[1]).map((item, index) => {
         return <TweeTCard key={index} item={item} indexOfTweet={index} />;
       })}
-      {!loading && (
+      {!loading && searchResults.length !== 0 && (
         <IconButton
           onClick={() => {
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -123,7 +123,7 @@ export default function SearchResults() {
           <ArrowUpwardIcon />
         </IconButton>
       )}
-      {!loading && (
+      {!loading && searchResults.length !== 0 && (
         <Pagination
           activePage={activePage}
           itemsCountPerPage={ItemsCountPerPage}
