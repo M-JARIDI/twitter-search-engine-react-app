@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TweeTCard({ item }) {
+export default function TweeTCard({ item, indexOfTweet }) {
   const searchResults = useSelector(searchState);
   const classes = useStyles();
   const history = useHistory();
@@ -41,7 +41,7 @@ export default function TweeTCard({ item }) {
   const handleDetailClick = () => {
     history.push({
       pathname: "/tweet_details",
-      state: { searchResults },
+      state: { searchResults, indexOfTweet },
     });
   };
 

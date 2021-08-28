@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Container, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import CircularProgress from "@material-ui/core/CircularProgress";
 // import Pagination from "@material-ui/lab/Pagination";
 import {
   subscribeSearchKeyword,
@@ -14,7 +15,7 @@ import { getSearchResults } from "../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: "80vh",
+    minHeight: "75vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // const [page, setPage] = useState(1);
 
@@ -69,7 +71,7 @@ export default function SearchResults() {
   // };
 
   useEffect(() => {
-    getSearchResults(searchKeyword, setSearchResults);
+    getSearchResults(searchKeyword, setSearchResults, setLoading);
     return () => {
       sessionStorage.clear();
       setSearchResults([]);
@@ -83,20 +85,24 @@ export default function SearchResults() {
 
   return (
     <Container className={classes.root}>
-      <IconButton
-        onClick={() => {
-          history.replace("/");
-          sessionStorage.clear();
-          window.location.reload();
-          dispatch(unSubscribeSearchKeyword());
-        }}
-        className={classes.goBackButton}
-      >
-        <ArrowBackIcon />
-      </IconButton>
+      {loading && <CircularProgress />}
+
+      {!loading && (
+        <IconButton
+          onClick={() => {
+            history.replace("/");
+            sessionStorage.clear();
+            window.location.reload();
+            dispatch(unSubscribeSearchKeyword());
+          }}
+          className={classes.goBackButton}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+      )}
       {searchResults?.map((item, index) => {
         /*.slice(page - 1, page)*/
-        return <TweeTCard key={index} item={item} />;
+        return <TweeTCard key={index} item={item} indexOfTweet={index} />;
       })}
       {/* <Pagination
         count={searchResults.length}

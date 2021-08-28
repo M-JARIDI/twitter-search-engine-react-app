@@ -13,9 +13,8 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "center",
     alignItems: "center",
-    minHeight: "80vh",
+    minHeight: "75vh",
   },
   cardContainer: {
     width: "600px",
@@ -47,11 +46,13 @@ const useStyles = makeStyles({
 });
 
 export default function TweetDetails() {
-  const [tweetActive, setTweetActive] = useState(0);
-  const history = useHistory();
   const location = useLocation();
-
   const searchResults = location.state.searchResults;
+  const indexOfTweet = location.state.indexOfTweet;
+
+  const [tweetActive, setTweetActive] = useState(indexOfTweet);
+
+  const history = useHistory();
 
   const classes = useStyles();
 

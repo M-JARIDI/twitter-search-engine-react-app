@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "600px",
     maxWidth: "100%",
-    margin: "1rem 0",
   },
   media: {
     height: 0,
@@ -72,15 +71,17 @@ export default function AlertDialogSlide({
             title={`${userDetails.name} @${userDetails.screen_name}`}
             subheader={`joined ${userDetails.created_at}`}
           />
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            style={{ padding: "0 1rem 1rem" }}
-          >
-            <strong>description : </strong>
-            {userDetails.description}
-          </Typography>
+          {userDetails?.description && (
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              style={{ padding: "0 1rem 1rem" }}
+            >
+              <strong>description : </strong>
+              {userDetails.description}
+            </Typography>
+          )}
           {userDetails?.profile_banner_url && (
             <CardMedia
               className={classes.media}
@@ -89,9 +90,32 @@ export default function AlertDialogSlide({
             />
           )}
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <strong>location :</strong> {userDetails.location}
-            </Typography>
+            {userDetails?.location && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>location :</strong> {userDetails.location}
+              </Typography>
+            )}
+            {userDetails?.friends_count && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>friends count :</strong> {userDetails.friends_count}
+              </Typography>
+            )}
+            {userDetails?.followers_count && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>followers count :</strong> {userDetails.followers_count}
+              </Typography>
+            )}
+            {userDetails?.following && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>following :</strong> {userDetails.following}
+              </Typography>
+            )}
+            {userDetails?.favourites_count && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>favourites count :</strong>{" "}
+                {userDetails.favourites_count}
+              </Typography>
+            )}
           </CardContent>
         </Card>
       </Dialog>

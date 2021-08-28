@@ -8,7 +8,7 @@ import SearchInput from "material-ui-search-bar";
 
 const useStyles = makeStyles({
   root: {
-    minHeight: "80vh",
+    minHeight: "75vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
