@@ -12,7 +12,7 @@ export const getSearchResults = async (
   await axios
     .get(`${API_URL}/search?q=${searchKeyword}`)
     .then((response) => {
-      console.log("search results", response.data.statuses);
+      console.log("search results", response.data.statuses[0].user);
       setSearchResults(response.data.statuses);
       setLoading(false);
     })
@@ -26,7 +26,6 @@ export const getUserDetails = async (id, setUserDetails) => {
   await axios
     .get(`${API_URL}/users/${id}`)
     .then((response) => {
-      console.log("user details", response.data);
       setUserDetails(response.data);
     })
     .catch((error) => {

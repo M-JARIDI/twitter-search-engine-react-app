@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "1rem 0",
     backgroundColor: "hsl(0, 0%, 96%)",
   },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
   avatar: {
     backgroundColor: "hsl(203, 89%, 53%)",
   },
@@ -65,13 +61,13 @@ export default function TweeTCard({ item, indexOfTweet }) {
         />
         {item.extended_entities?.media[0]?.media_url_https && (
           <CardMedia
-            className={classes.media}
+            component="img"
+            height="100%"
             image={item.extended_entities.media[0].media_url_https}
-            // title="Paella dish"
           />
         )}
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" component="p">
             {item.text}
           </Typography>
         </CardContent>
@@ -84,7 +80,8 @@ export default function TweeTCard({ item, indexOfTweet }) {
       <AlertDialogSlide
         openDetailUser={openDetailUser}
         setOpenDetailUser={setOpenDetailUser}
-        user_id={item.user.id}
+        // user_id={item.user.id}
+        userDetails={item.user}
       />
     </>
   );

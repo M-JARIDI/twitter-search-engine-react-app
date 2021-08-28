@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { Container, IconButton } from "@material-ui/core";
+import { Container, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CircularProgress from "@material-ui/core/CircularProgress";
-// import Pagination from "@material-ui/lab/Pagination";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import Pagination from "react-js-pagination";
 import {
   subscribeSearchKeyword,
   unSubscribeSearchKeyword,
@@ -45,17 +46,17 @@ const useStyles = makeStyles((theme) => ({
     margin: "0.5rem 0.25rem",
   },
   goBackButton: { marginRight: "auto" },
-  pagination: {
-    display: "flex",
-    justifyContent: "center",
-  },
+  scrollToTop: { marginLeft: "auto" },
 }));
+
+const ItemsCountPerPage = 10;
 
 export default function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const [page, setPage] = useState(1);
+  const [activePage, setActivePage] = useState(1);
+  const [bounds, setBounds] = useState([0, ItemsCountPerPage]);
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -66,9 +67,14 @@ export default function SearchResults() {
   const searchKeyword =
     sessionStorage.getItem("searchKeyword") || location.search.substr(3) || "";
 
-  // const handleChangePage = (event, value) => {
-  //   setPage(value);
-  // };
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+    setBounds([
+      (pageNumber - 1) * ItemsCountPerPage,
+      pageNumber * ItemsCountPerPage,
+    ]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     getSearchResults(searchKeyword, setSearchResults, setLoading);
@@ -86,33 +92,49 @@ export default function SearchResults() {
   return (
     <Container className={classes.root}>
       {loading && <CircularProgress />}
-
+      {!loading && (
+        <>
+          <IconButton
+            onClick={() => {
+              history.replace("/");
+              sessionStorage.clear();
+              window.location.reload();
+              dispatch(unSubscribeSearchKeyword());
+            }}
+            className={classes.goBackButton}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography>
+            {searchResults?.length} results,{" "}
+            {searchResults?.length / ItemsCountPerPage} per page
+          </Typography>
+        </>
+      )}
+      {searchResults?.slice(bounds[0], bounds[1]).map((item, index) => {
+        return <TweeTCard key={index} item={item} indexOfTweet={index} />;
+      })}
       {!loading && (
         <IconButton
           onClick={() => {
-            history.replace("/");
-            sessionStorage.clear();
-            window.location.reload();
-            dispatch(unSubscribeSearchKeyword());
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className={classes.goBackButton}
+          className={classes.scrollToTop}
         >
-          <ArrowBackIcon />
+          <ArrowUpwardIcon />
         </IconButton>
       )}
-      {searchResults?.map((item, index) => {
-        /*.slice(page - 1, page)*/
-        return <TweeTCard key={index} item={item} indexOfTweet={index} />;
-      })}
-      {/* <Pagination
-        count={searchResults.length}
-        page={page}
-        onChange={handleChangePage}
-        showFirstButton
-        showLastButton
-        size="large"
-        className={classes.pagination}
-      /> */}
+      {!loading && (
+        <Pagination
+          activePage={activePage}
+          itemsCountPerPage={ItemsCountPerPage}
+          totalItemsCount={searchResults.length}
+          pageRangeDisplayed={ItemsCountPerPage}
+          onChange={handlePageChange}
+          itemClass="page-item"
+          linkClass="page-link"
+        />
+      )}
     </Container>
   );
 }

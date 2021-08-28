@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React /*, { useState, useEffect }*/ from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -12,7 +12,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import { getUserDetails } from "../utils/utils";
+// import { getUserDetails } from "../utils/utils";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -22,29 +22,28 @@ const useStyles = makeStyles((theme) => ({
     width: "600px",
     maxWidth: "100%",
   },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
   avatar: {
     backgroundColor: "hsl(203, 89%, 53%)",
+    height: "70px",
+    width: "70px",
   },
 }));
 
 export default function AlertDialogSlide({
   openDetailUser,
   setOpenDetailUser,
-  user_id,
+  // user_id,
+  userDetails,
 }) {
-  const [userDetails, setUserDetails] = useState([]);
+  // const [userDetails, setUserDetails] = useState([]);
   const classes = useStyles();
 
-  useEffect(() => {
-    getUserDetails(user_id, setUserDetails);
-    return () => {
-      setUserDetails([]);
-    };
-  }, [user_id]);
+  // useEffect(() => {
+  //   getUserDetails(user_id, setUserDetails);
+  //   return () => {
+  //     setUserDetails([]);
+  //   };
+  // }, [user_id]);
 
   return (
     <div>
@@ -65,7 +64,15 @@ export default function AlertDialogSlide({
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                <img src={userDetails.profile_image_url_https} alt="images" />
+                <img
+                  src={userDetails.profile_image_url_https}
+                  alt="images"
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "contain",
+                  }}
+                />
               </Avatar>
             }
             title={`${userDetails.name} @${userDetails.screen_name}`}
@@ -74,7 +81,6 @@ export default function AlertDialogSlide({
           {userDetails?.description && (
             <Typography
               variant="body2"
-              color="textSecondary"
               component="p"
               style={{ padding: "0 1rem 1rem" }}
             >
@@ -84,36 +90,35 @@ export default function AlertDialogSlide({
           )}
           {userDetails?.profile_banner_url && (
             <CardMedia
-              className={classes.media}
+              component="img"
+              height="100%"
               image={userDetails.profile_banner_url}
-              // title="Paella dish"
             />
           )}
           <CardContent>
             {userDetails?.location && (
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" component="p">
                 <strong>location :</strong> {userDetails.location}
               </Typography>
             )}
             {userDetails?.friends_count && (
-              <Typography variant="body2" color="textSecondary" component="p">
-                <strong>friends count :</strong> {userDetails.friends_count}
+              <Typography variant="body2" component="p">
+                <strong>friends :</strong> {userDetails.friends_count}
               </Typography>
             )}
             {userDetails?.followers_count && (
-              <Typography variant="body2" color="textSecondary" component="p">
-                <strong>followers count :</strong> {userDetails.followers_count}
+              <Typography variant="body2" component="p">
+                <strong>followers :</strong> {userDetails.followers_count}
               </Typography>
             )}
             {userDetails?.following && (
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" component="p">
                 <strong>following :</strong> {userDetails.following}
               </Typography>
             )}
             {userDetails?.favourites_count && (
-              <Typography variant="body2" color="textSecondary" component="p">
-                <strong>favourites count :</strong>{" "}
-                {userDetails.favourites_count}
+              <Typography variant="body2" component="p">
+                <strong>favourites :</strong> {userDetails.favourites_count}
               </Typography>
             )}
           </CardContent>

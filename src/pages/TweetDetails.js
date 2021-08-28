@@ -35,10 +35,6 @@ const useStyles = makeStyles({
     backgroundColor: "hsl(203, 89%, 53%)",
     margin: "0.5rem 0.25rem",
   },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
   avatar: {
     backgroundColor: "hsl(203, 89%, 53%)",
   },
@@ -87,25 +83,25 @@ export default function TweetDetails() {
             />
             {item.extended_entities?.media[0]?.media_url_https && (
               <CardMedia
-                className={classes.media}
+                component="img"
+                height="100%"
                 image={item.extended_entities.media[0].media_url_https}
-                // title="Paella dish"
               />
             )}
             <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" component="p">
                 {item.text}
               </Typography>
               <hr />
               {item?.retweeted_status && (
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" component="p">
                   <strong>retweeted status : </strong>
                   <br />
                   {item.retweeted_status?.text}
                 </Typography>
               )}
               {item?.entities?.user_mentions.length !== 0 && (
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" component="p">
                   <strong>user mentions : </strong>
                   {item?.entities?.user_mentions?.map((mention) => {
                     return `@${mention.screen_name}, `;
@@ -113,7 +109,7 @@ export default function TweetDetails() {
                 </Typography>
               )}
               {item?.entities?.hashtags?.length !== 0 && (
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" component="p">
                   <strong>user hashtags : </strong>
                   {item.entities.hashtags.map((hash) => {
                     return `#${hash.text}, `;
