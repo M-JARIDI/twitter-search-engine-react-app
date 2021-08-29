@@ -69,6 +69,9 @@ export default function TweetDetails() {
       >
         <ArrowBackIcon />
       </IconButton>
+      <Typography style={{ marginBottom: "1rem" }}>{`${tweetActive + 1}/${
+        searchResults.length
+      }`}</Typography>
       {searchResults.slice(tweetActive, tweetActive + 1).map((item, index) => {
         return (
           <Card key={index} className={classes.cardContainer}>
