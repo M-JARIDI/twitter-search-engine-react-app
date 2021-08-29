@@ -1,3 +1,45 @@
+# twitter-search-engine
+
+A simple React search engine app that displays information from the Twitter API.
+See it live [twitter-search-engine](https://twitter-search-engine-react.herokuapp.com/)
+
+## Getting started in local
+
+1. Sign up over at [developer.twitter.com/en/apply-for-access](https://developer.twitter.com/en/apply-for-access) to get 4 keys :
+
+- CONSUMER_KEY
+- CONSUMER_SECRET
+- ACCESS_TOKEN
+- ACCESS_TOKEN_SECRET
+
+2. Fork the project and clone it locally.
+3. Create a file at the root of the project called `.env` with the following contents:
+
+```sh
+TWITTER_CONSUMER_KEY='your key'
+TWITTER_CONSUMER_SECRET='your key'
+TWITTER_ACCESS_TOKEN_KEY='your key'
+TWITTER_ACCESS_TOKEN_SECRET='your key'
+```
+
+4. go to "/src/utlis/utils.js" and change the api url (line 4) to yours
+
+> you can find the REST API used in this projetct at : [twitter-search-engine-backend-ts](https://github.com/M-JARIDI/twitter-search-engine-backend-ts).
+
+---
+
+### Exercise :
+
+Build a react app that consume this API and has the following functionalities :
+
+1. a page with an input where you can type your search + a search button (like google)
+2. a page where it displays content related to the search, each search content is composed with a tweet content (basic info, image if any + text) and a link of the user who posted it (+ avatar)
+3. each search is opened in a new tab, and we can navigate between tabs, and close tabs (so it should keep content related to each search)
+4. when we click on the user link, it displays a closable popup window, with the user profile.
+5. a feature to open the detail of a tweet, and in this page add two button one to see the prev tweet and the next tweet, based on the content list you got from the search
+
+- The output is a react app + a readme which explains how to setup and launch it
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
