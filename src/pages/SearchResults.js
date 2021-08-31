@@ -129,7 +129,7 @@ export default function SearchResults() {
           activePage={activePage}
           itemsCountPerPage={ItemsCountPerPage}
           totalItemsCount={searchResults.length}
-          pageRangeDisplayed={ItemsCountPerPage}
+          pageRangeDisplayed={ItemsCountPerPage / 2}
           onChange={handlePageChange}
           itemClass="page-item"
           linkClass="page-link"
