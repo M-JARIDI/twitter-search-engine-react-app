@@ -4,9 +4,9 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Container, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import Pagination from "react-js-pagination";
+import SkeletonCard from "../components/SkeletonCard";
 import {
   subscribeSearchKeyword,
   unSubscribeSearchKeyword,
@@ -49,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
   scrollToTop: { marginLeft: "auto" },
 }));
 
-const ItemsCountPerPage = 10;
+const itemsCountPerPage = 10;
 
 export default function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [activePage, setActivePage] = useState(1);
-  const [bounds, setBounds] = useState([0, ItemsCountPerPage]);
+  const [bounds, setBounds] = useState([0, itemsCountPerPage]);
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -70,11 +70,16 @@ export default function SearchResults() {
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
     setBounds([
-      (pageNumber - 1) * ItemsCountPerPage,
-      pageNumber * ItemsCountPerPage,
+      (pageNumber - 1) * itemsCountPerPage,
+      pageNumber * itemsCountPerPage,
     ]);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const SkeletonCards = [];
+  for (var i = 0; i < itemsCountPerPage; i++) {
+    SkeletonCards.push(<SkeletonCard />);
+  }
 
   useEffect(() => {
     getSearchResults(searchKeyword, setSearchResults, setLoading);
@@ -91,25 +96,30 @@ export default function SearchResults() {
 
   return (
     <Container className={classes.root}>
-      {loading && <CircularProgress />}
-      {!loading && (
+      <IconButton
+        onClick={() => {
+          history.replace("/");
+          sessionStorage.clear();
+          window.location.reload();
+          dispatch(unSubscribeSearchKeyword());
+        }}
+        className={classes.goBackButton}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+      {loading && (
         <>
-          <IconButton
-            onClick={() => {
-              history.replace("/");
-              sessionStorage.clear();
-              window.location.reload();
-              dispatch(unSubscribeSearchKeyword());
-            }}
-            className={classes.goBackButton}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography>
-            {searchResults?.length} results,{" "}
-            {searchResults?.length / ItemsCountPerPage} per page
-          </Typography>
+          {SkeletonCards.length !== 0 &&
+            SkeletonCards.map((skeleton, index) => {
+              return skeleton;
+            })}
         </>
+      )}
+      {!loading && (
+        <Typography>
+          {searchResults?.length} results,{" "}
+          {searchResults?.length / itemsCountPerPage} per page
+        </Typography>
       )}
       {searchResults?.slice(bounds[0], bounds[1]).map((item, index) => {
         return <TweeTCard key={index} item={item} indexOfTweet={index} />;
@@ -127,9 +137,9 @@ export default function SearchResults() {
       {!loading && searchResults.length !== 0 && (
         <Pagination
           activePage={activePage}
-          itemsCountPerPage={ItemsCountPerPage}
+          itemsCountPerPage={itemsCountPerPage}
           totalItemsCount={searchResults.length}
-          pageRangeDisplayed={ItemsCountPerPage / 2}
+          pageRangeDisplayed={itemsCountPerPage / 2}
           onChange={handlePageChange}
           itemClass="page-item"
           linkClass="page-link"
