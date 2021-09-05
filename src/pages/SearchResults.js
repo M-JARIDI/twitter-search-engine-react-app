@@ -67,6 +67,8 @@ export default function SearchResults() {
   const searchKeyword =
     sessionStorage.getItem("searchKeyword") || location.search.substr(3) || "";
 
+  window.document.title = `${searchKeyword} - search results`;
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
     setBounds([
@@ -78,7 +80,7 @@ export default function SearchResults() {
 
   const SkeletonCards = [];
   for (var i = 0; i < itemsCountPerPage; i++) {
-    SkeletonCards.push(<SkeletonCard />);
+    SkeletonCards.push(<SkeletonCard key={i} />);
   }
 
   useEffect(() => {
@@ -110,7 +112,7 @@ export default function SearchResults() {
       {loading && (
         <>
           {SkeletonCards.length !== 0 &&
-            SkeletonCards.map((skeleton, index) => {
+            SkeletonCards.map((skeleton) => {
               return skeleton;
             })}
         </>
