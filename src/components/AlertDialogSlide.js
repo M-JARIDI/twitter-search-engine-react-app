@@ -13,6 +13,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 // import { getUserDetails } from "../utils/utils";
+import { formatTimeAgo } from "../utils/utils";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -76,7 +78,9 @@ export default function AlertDialogSlide({
               </Avatar>
             }
             title={`${userDetails.name} @${userDetails.screen_name}`}
-            subheader={`joined ${userDetails.created_at}`}
+            subheader={`joined ${formatTimeAgo(
+              Date.parse(userDetails.created_at)
+            )}`}
           />
           {userDetails?.description && (
             <Typography

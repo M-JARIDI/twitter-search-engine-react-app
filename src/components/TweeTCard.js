@@ -15,6 +15,8 @@ import Button from "@material-ui/core/Button";
 import PersonIcon from "@material-ui/icons/Person";
 import AlertDialogSlide from "./AlertDialogSlide";
 
+import { formatTimeAgo } from "../utils/utils";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "600px",
@@ -31,7 +33,6 @@ export default function TweeTCard({ item, indexOfTweet }) {
   const searchResults = useSelector(searchState);
   const classes = useStyles();
   const history = useHistory();
-
   const [openDetailUser, setOpenDetailUser] = useState(false);
 
   const handleDetailClick = () => {
@@ -57,7 +58,7 @@ export default function TweeTCard({ item, indexOfTweet }) {
             </IconButton>
           }
           title={`${item.user.name} @${item.user.screen_name}`}
-          subheader={item.created_at}
+          subheader={formatTimeAgo(Date.parse(item.created_at))}
         />
         {item.extended_entities?.media[0]?.media_url_https && (
           <CardMedia
