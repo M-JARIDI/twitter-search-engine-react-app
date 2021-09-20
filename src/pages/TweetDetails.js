@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { formatTimeAgo } from "../utils/utils";
 
 const useStyles = makeStyles({
   root: {
@@ -82,7 +83,7 @@ export default function TweetDetails() {
                 </Avatar>
               }
               title={`${item.user.name} @${item.user.screen_name}`}
-              subheader={item.created_at}
+              subheader={formatTimeAgo(Date.parse(item.created_at))}
             />
             {item.extended_entities?.media[0]?.media_url_https && (
               <CardMedia
