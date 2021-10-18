@@ -78,11 +78,6 @@ export default function SearchResults() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const SkeletonCards = [];
-  for (var i = 0; i < itemsCountPerPage; i++) {
-    SkeletonCards.push(<SkeletonCard key={i} />);
-  }
-
   useEffect(() => {
     getSearchResults(searchKeyword, setSearchResults, setLoading);
     return () => {
@@ -111,10 +106,9 @@ export default function SearchResults() {
       </IconButton>
       {loading && (
         <>
-          {SkeletonCards.length !== 0 &&
-            SkeletonCards.map((skeleton) => {
-              return skeleton;
-            })}
+          {[...Array(2).keys()].map((index) => {
+            return <SkeletonCard key={index} />;
+          })}
         </>
       )}
       {!loading && (
