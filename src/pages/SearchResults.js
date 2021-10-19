@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
 import { Container, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const itemsCountPerPage = 10;
 
-export default function SearchResults() {
+export default function SearchResults({ history, location }) {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -61,11 +60,7 @@ export default function SearchResults() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const history = useHistory();
-  const location = useLocation();
-
-  const searchKeyword =
-    sessionStorage.getItem("searchKeyword") || location.search.substr(3) || "";
+  const searchKeyword = location?.search?.substr(3) || "";
 
   window.document.title = `${searchKeyword} - search results`;
 
@@ -79,25 +74,19 @@ export default function SearchResults() {
   };
 
   useEffect(() => {
+    dispatch(subscribeSearchKeyword(searchKeyword));
     getSearchResults(searchKeyword, setSearchResults, setLoading);
     return () => {
-      sessionStorage.clear();
       setSearchResults([]);
       dispatch(unSubscribeSearchKeyword());
     };
   }, [searchKeyword, dispatch]);
-
-  useEffect(() => {
-    dispatch(subscribeSearchKeyword(searchResults));
-  }, [searchResults, dispatch]);
 
   return (
     <Container className={classes.root}>
       <IconButton
         onClick={() => {
           history.replace("/");
-          sessionStorage.clear();
-          window.location.reload();
           dispatch(unSubscribeSearchKeyword());
         }}
         className={classes.goBackButton}
@@ -118,7 +107,14 @@ export default function SearchResults() {
         </Typography>
       )}
       {searchResults?.slice(bounds[0], bounds[1]).map((item, index) => {
-        return <TweeTCard key={index} item={item} indexOfTweet={index} />;
+        return (
+          <TweeTCard
+            searchResults={searchResults}
+            key={index}
+            item={item}
+            indexOfTweet={index}
+          />
+        );
       })}
       {!loading && searchResults.length !== 0 && (
         <IconButton

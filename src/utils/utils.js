@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL = "http://localhost:8000";
-const API_URL = "https://twitter-search-engine-back-ts.herokuapp.com";
+// const API_URL = "https://twitter-search-engine-back-ts.herokuapp.com";
 
 export const getSearchResults = async (
   searchKeyword,
@@ -10,7 +10,7 @@ export const getSearchResults = async (
 ) => {
   setLoading(true);
   await axios
-    .get(`${API_URL}/search?q=${searchKeyword}`)
+    .get(`/search?q=${searchKeyword}`)
     .then((response) => {
       setSearchResults(response.data.statuses);
       setLoading(false);
@@ -23,7 +23,7 @@ export const getSearchResults = async (
 
 export const getUserDetails = async (id, setUserDetails) => {
   await axios
-    .get(`${API_URL}/users/${id}`)
+    .get(`/users/${id}`)
     .then((response) => {
       setUserDetails(response.data);
     })

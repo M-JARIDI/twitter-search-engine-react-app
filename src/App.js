@@ -13,8 +13,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <Container>
-        <SearchAppBar />
         <Router>
+          <SearchAppBar />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/search" component={SearchResults} />

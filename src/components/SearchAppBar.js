@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { alpha, makeStyles, createTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +15,7 @@ import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 
 import SearchBar from "material-ui-search-bar";
+import { searchState } from "../redux/slices/searchSlice";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -55,7 +58,7 @@ export default function SearchAppBar() {
     },
   });
 
-  const searchKeyword = sessionStorage.getItem("searchKeyword");
+  const searchKeyword = useSelector(searchState);
 
   return (
     <div className={classes.grow}>
@@ -65,7 +68,7 @@ export default function SearchAppBar() {
       >
         <Toolbar>
           <div style={{ margin: "5px 10px" }}>
-            <a href="/" onClick={() => sessionStorage.clear()}>
+            <Link to="/">
               <img
                 src="twitterr.png"
                 width="40"
@@ -73,7 +76,7 @@ export default function SearchAppBar() {
                 alt="logo"
                 style={{ boxShadow: "0px 5px 2px black" }}
               />
-            </a>
+            </Link>
           </div>
           <Typography className={classes.title} variant="h6" noWrap>
             Twitter Search Engine

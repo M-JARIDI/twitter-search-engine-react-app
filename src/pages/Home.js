@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Container, Button, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import { makeStyles } from "@material-ui/core/styles";
@@ -43,11 +43,10 @@ export default function Home() {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const classes = useStyles();
+  const history = useHistory();
 
   const handleOnClickButton = () => {
-    sessionStorage.setItem("searchKeyword", searchKeyword);
-    window.open(`/search?q=${searchKeyword}`, "_blank")?.focus();
-    sessionStorage.clear();
+    history.push(`/search?q=${searchKeyword}`);
   };
 
   return (
@@ -60,7 +59,7 @@ export default function Home() {
           value={searchKeyword}
           placeholder="Search here"
           onChange={(newValue) => setSearchKeyword(newValue)}
-          onRequestSearch={() => handleOnClickButton()}
+          onRequestSearch={() => handleOnClickButton(searchKeyword)}
           onCancelSearch={() => setSearchKeyword("")}
           className={classes.SearchInput}
         />
@@ -69,14 +68,13 @@ export default function Home() {
             pathname: "/search",
             search: `q=${searchKeyword}`,
           }}
-          target="_blank"
           style={{ textDecoration: "none" }}
         >
           <Button
             variant="contained"
             color="primary"
             endIcon={<SendIcon></SendIcon>}
-            onClick={() => handleOnClickButton()}
+            onClick={() => handleOnClickButton(searchKeyword)}
             className={classes.button}
           >
             Search
