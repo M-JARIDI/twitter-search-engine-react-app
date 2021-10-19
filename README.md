@@ -1,9 +1,9 @@
 # twitter-search-engine
 
 A simple React search engine app that displays information from the Twitter API.
-See it live [twitter-search-engine](https://twitter-search-engine-react.herokuapp.com/)
+See it live [twitter-search-engine](https://twitter-engine-react-nodejs.herokuapp.com/)
 
-### live : https://twitter-search-engine-react.herokuapp.com/
+### live : https://twitter-engine-react-nodejs.herokuapp.com/
 
 > you can find the code source of the REST API used in this project at : [twitter-search-engine-backend-ts](https://github.com/M-JARIDI/twitter-search-engine-backend-ts).
 
